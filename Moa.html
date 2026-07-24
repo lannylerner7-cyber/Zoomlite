@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join ZoomLite Live</title>
+<style>
+  /* General Page Styling */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+  }
+
+  .container {
+    background-color: #ffffff;
+    max-width: 500px;
+    width: 100%;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* Typography */
+  h1 {
+    color: #464EB8;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .instruction-text {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .setup-text {
+    font-size: 14px;
+    color: #666;
+    margin: 25px 0;
+    line-height: 1.6;
+    background-color: #f3f4f6;
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    background-color: #464EB8;
+    color: white;
+    padding: 14px 0;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+  }
+
+  .btn-primary:hover {
+    background-color: #3a4199;
+  }
+
+  /* Footer Banner */
+  .footer-banner {
+    margin-top: 30px;
+  }
+  
+  .footer-banner img {
+    max-width: 100%;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* 3D Spinning Cube CSS - RESIZED TO BE SMALLER */
+  .scene {
+    width: 120px;  /* Reduced for smaller size */
+    height: 120px; /* Reduced for smaller size */
+    perspective: 400px; /* Adjusted for smaller depth */
+    margin: 30px auto; 
+  }
+
+  .cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spinCube 12s infinite linear;
+  }
+
+  .cube:hover {
+    animation-play-state: paused;
+    cursor: pointer;
+  }
+
+  .face {
+    position: absolute;
+    width: 120px;  /* Reduced for smaller size */
+    height: 120px; /* Reduced for smaller size */
+    background: rgba(255, 255, 255, 0.98);
+    border: 2px solid #e0e0e0;
+    border-radius: 16px; /* Scaled down the rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    backface-visibility: visible;
+  }
+
+  .face img {
+    max-width: 60%;
+    max-height: 60%;
+    object-fit: contain;
+  }
+
+  /* Translations pushed out to 60px (half of the 120px width) */
+  .front  { transform: rotateY(  0deg) translateZ(60px); }
+  .back   { transform: rotateY(180deg) translateZ(60px); }
+  .right  { transform: rotateY( 90deg) translateZ(60px); }
+  .left   { transform: rotateY(-90deg) translateZ(60px); }
+  .top    { transform: rotateX( 90deg) translateZ(60px); }
+  .bottom { transform: rotateX(-90deg) translateZ(60px); }
+
+  @keyframes spinCube {
+    0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- Header -->
+  <h1>Join your meeting on<br>ZoomLite Live</h1>
+
+  <!-- Center Source: Smaller 3D Spinning Cube -->
+  <div class="scene">
+    <div class="cube">
+      <!-- Front & Back: Google Meet -->
+      <div class="face front">
+        <img src="https://storage.googleapis.com/gweb-workspace-assets/uploads/7uffzv9dk4sn-3VebjOM7tIsrB7khjG5Y3Y-fb2f6682913ce49f340a377b60f2eb72-meet_2026-192px.optimized.svg" alt="Google Meet">
+      </div>
+      <div class="face back">
+        <img src="https://storage.googleapis.com/gweb-workspace-assets/uploads/7uffzv9dk4sn-3VebjOM7tIsrB7khjG5Y3Y-fb2f6682913ce49f340a377b60f2eb72-meet_2026-192px.optimized.svg" alt="Google Meet">
+      </div>
+
+      <!-- Left & Right: Zoom -->
+      <div class="face right">
+        <img src="https://st1.zoom.us/static/26.7.62602/image/new/topNav/Zoom_logo.svg" alt="Zoom">
+      </div>
+      <div class="face left">
+        <img src="https://st1.zoom.us/static/26.7.62602/image/new/topNav/Zoom_logo.svg" alt="Zoom">
+      </div>
+
+      <!-- Top & Bottom: Microsoft Teams -->
+      <div class="face top">
+        <img src="https://statics.teams.cdn.live.net/evergreen-assets/icons/Teams_Logo_v2025_80x80.png" alt="Microsoft Teams">
+      </div>
+      <div class="face bottom">
+        <img src="https://statics.teams.cdn.live.net/evergreen-assets/icons/Teams_Logo_v2025_80x80.png" alt="Microsoft Teams">
+      </div>
+    </div>
+  </div>
+
+  <!-- Instructions & Download -->
+  <p class="instruction-text">First, you'll need to download the app.</p>
+  
+  <a href="#" class="btn-primary">Download for Windows (64-bit)</a>
+
+  <!-- Setup Process Text -->
+  <div class="setup-text">
+    <strong>Quick Setup:</strong> Open the downloaded application and enter your 6-digit meeting ID to join instantly.
+  </div>
+
+  <!-- Footer Banner Source -->
+  <div class="footer-banner">
+    <img src="https://lh3.googleusercontent.com/jp47xCugbigj1lGYFfHHBe3heBmYtx_AWkyfaMVzLhQLWzHDDkmHfqaWu1UMuyHX4l-f9MpAtrcAxOKWz-xMV3fAeDnEVaFejKw4=e365-pa-nu-rw-w720" alt="Footer Feature Banner">
+  </div>
+
+</div>
+
+</body>
+</html>
