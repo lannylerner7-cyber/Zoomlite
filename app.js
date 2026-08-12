@@ -155,11 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
      */
 
     setTimeout(() => {
-
         window.location.replace(
             DESKTOP_DESTINATION
         );
-
     }, 3000);
 
-});
+}); // <-- Make sure this closing bracket and parenthesis are there!
